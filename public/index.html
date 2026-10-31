@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PokeMind AI - Competitive Pokemon Intelligence System</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0b0f19;
+      --card-bg: #131b2e;
+      --card-border: #1e293b;
+      --accent: #3b82f6;
+      --accent-hover: #2563eb;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --success: #10b981;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+      --font-main: 'Inter', sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: var(--font-main);
+      line-height: 1.5;
+      padding: 24px;
+    }
+
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 24px;
+      border-bottom: 1px solid var(--card-border);
+      margin-bottom: 24px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .brand h1 {
+      font-size: 24px;
+      font-weight: 800;
+      background: linear-gradient(135deg, #60a5fa 0%, #a855f7 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .badge {
+      background: rgba(59, 130, 246, 0.2);
+      color: #60a5fa;
+      font-size: 12px;
+      font-weight: 600;
+      padding: 4px 8px;
+      border-radius: 9999px;
+      border: 1px solid rgba(59, 130, 246, 0.4);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 24px;
+    }
+
+    @media (max-width: 900px) {
+      .grid { grid-template-columns: 1fr; }
+    }
+
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+
+    .card h2 {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .form-group {
+      margin-bottom: 16px;
+    }
+    label {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+    input, select, textarea {
+      width: 100%;
+      background: #0f172a;
+      border: 1px solid var(--card-border);
+      color: var(--text);
+      padding: 10px 12px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-family: inherit;
+    }
+    input:focus, select:focus, textarea:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.3);
+    }
+
+    .range-slider {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .range-slider span {
+      font-size: 12px;
+      font-family: var(--font-mono);
+      min-width: 40px;
+    }
+
+    .btn {
+      background: var(--accent);
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      width: 100%;
+      font-size: 15px;
+      transition: background 0.2s;
+    }
+    .btn:hover {
+      background: var(--accent-hover);
+    }
+    .btn-secondary {
+      background: #1e293b;
+      color: var(--text);
+      margin-top: 8px;
+    }
+    .btn-secondary:hover {
+      background: #334155;
+    }
+
+    /* Team Roster Grid */
+    .roster-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+    .mon-card {
+      background: #0f172a;
+      border: 1px solid var(--card-border);
+      border-radius: 10px;
+      padding: 14px;
+      position: relative;
+    }
+    .mon-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 8px;
+    }
+    .mon-name {
+      font-size: 16px;
+      font-weight: 700;
+      color: #60a5fa;
+    }
+    .mon-item {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+    .mon-detail {
+      font-size: 12px;
+      margin-bottom: 4px;
+    }
+    .mon-moves {
+      margin-top: 8px;
+      padding-top: 8px;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    .move-tag {
+      display: inline-block;
+      background: rgba(255, 255, 255, 0.05);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 11px;
+      margin-right: 4px;
+      margin-bottom: 4px;
+    }
+    .tera-pill {
+      font-size: 11px;
+      background: #8b5cf6;
+      color: white;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-weight: 600;
+    }
+
+    /* Synergy Metrics Banner */
+    .metrics-banner {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+    .metric-box {
+      background: #0f172a;
+      border: 1px solid var(--card-border);
+      padding: 12px;
+      border-radius: 8px;
+      text-align: center;
+    }
+    .metric-value {
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--success);
+      font-family: var(--font-mono);
+    }
+    .metric-label {
+      font-size: 11px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+
+    pre.showdown-box {
+      background: #050811;
+      border: 1px solid var(--card-border);
+      padding: 16px;
+      border-radius: 8px;
+      font-family: var(--font-mono);
+      font-size: 13px;
+      white-space: pre-wrap;
+      max-height: 250px;
+      overflow-y: auto;
+      margin-bottom: 12px;
+    }
+
+    .playbook-step {
+      background: #0f172a;
+      border-left: 3px solid var(--accent);
+      padding: 10px 14px;
+      margin-bottom: 8px;
+      border-radius: 0 6px 6px 0;
+      font-size: 13px;
+    }
+
+    .tab-nav {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+    .tab-btn {
+      background: #0f172a;
+      border: 1px solid var(--card-border);
+      color: var(--text-muted);
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 13px;
+      cursor: pointer;
+    }
+    .tab-btn.active {
+      background: var(--accent);
+      color: white;
+      border-color: var(--accent);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="brand">
+        <h1>PokeMind AI</h1>
+        <span class="badge">Singles & Doubles Intelligence</span>
+      </div>
+      <div style="font-size: 13px; color: var(--text-muted);">
+        Hybrid Optimization &middot; Custom Regulations &middot; Playstyle AI
+      </div>
+    </header>
+
+    <div class="grid">
+      <!-- Left Column: Controls & Profiler -->
+      <div>
+        <!-- Regulation Configuration Card -->
+        <div class="card">
+          <h2>1. Custom Regulation</h2>
+          <div class="form-group">
+            <label>Format</label>
+            <select id="formatSelect">
+              <option value="singles">Singles Battle</option>
+              <option value="doubles">Doubles / VGC</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Regulation Preset</label>
+            <select id="presetSelect">
+              <option value="gen9ou">Gen 9 Singles OU (Smogon)</option>
+              <option value="vgc_regh">VGC Regulation H (No Legendaries/Paradox)</option>
+              <option value="vgc_regg">VGC Regulation G (1 Restricted)</option>
+              <option value="gen9ubers">Gen 9 Ubers</option>
+              <option value="doubles_ou">Gen 9 Doubles OU</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Custom Banlist (Comma separated)</label>
+            <input type="text" id="bannedInput" placeholder="e.g. Garchomp, Ting-Lu, Urshifu">
+          </div>
+
+          <div class="form-group">
+            <label>Required Core Pokemon (Optional)</label>
+            <input type="text" id="requiredInput" placeholder="e.g. Dragapult, Incineroar">
+          </div>
+
+          <div class="form-group" style="margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--card-border);">
+            <label style="color: #60a5fa;">Cobblemon PC Box (Caught Pokemon in Minecraft)</label>
+            <textarea id="cobblemonBoxInput" rows="3" placeholder="Paste your caught Pokemon (comma separated)&#10;e.g. Meowscarada, Garchomp, Corviknight, Gyarados, Tinkaton, Skeledirge, Magnezone"></textarea>
+            <div style="margin-top: 6px; font-size: 11px; color: var(--text-muted);">
+              Leave empty to generate from all legal Pokémon, or paste your PC box to optimize what you already own!
+            </div>
+          </div>
+        </div>
+
+        <!-- Playstyle Profiler Card -->
+        <div class="card">
+          <h2>2. Personal Playstyle Profiler</h2>
+          <div class="tab-nav">
+            <button class="tab-btn active" id="tabQuizBtn" onclick="switchProfilerTab('quiz')">Interactive Quiz</button>
+            <button class="tab-btn" id="tabReplayBtn" onclick="switchProfilerTab('replay')">Showdown Replay</button>
+          </div>
+
+          <div id="quizSection">
+            <div class="form-group">
+              <label>Battle Tempo (Slow Stall vs Fast Sweepers)</label>
+              <div class="range-slider">
+                <input type="range" id="paceRange" min="1" max="5" value="4">
+                <span id="paceVal">4 / 5</span>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Switching / Pivoting (Stay & Hit vs VoltTurn)</label>
+              <div class="range-slider">
+                <input type="range" id="switchRange" min="1" max="5" value="4">
+                <span id="switchVal">4 / 5</span>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Aggression & Risk Tolerance</label>
+              <div class="range-slider">
+                <input type="range" id="aggroRange" min="1" max="5" value="5">
+                <span id="aggroVal">5 / 5</span>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Speed Archetype (1 = Trick Room, 5 = Tailwind/HO)</label>
+              <div class="range-slider">
+                <input type="range" id="speedRange" min="1" max="5" value="4">
+                <span id="speedVal">4 / 5</span>
+              </div>
+            </div>
+          </div>
+
+          <div id="replaySection" style="display: none;">
+            <div class="form-group">
+              <label>Paste Raw Showdown Battle Log</label>
+              <textarea id="replayLogInput" rows="6" placeholder="|player|p1|...\n|turn|1\n|move|..."></textarea>
+            </div>
+            <div class="form-group">
+              <label>Your In-Game Username</label>
+              <input type="text" id="replayUsername" placeholder="e.g. RedMaster">
+            </div>
+          </div>
+
+          <button class="btn" onclick="generateTeam()">Generate Optimized Team</button>
+        </div>
+      </div>
+
+      <!-- Right Column: Results & Playbook -->
+      <div>
+        <!-- Profile Banner -->
+        <div class="card" id="profileCard" style="display: none;">
+          <h2>Playstyle Match Identified</h2>
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+            <span style="font-size: 20px; font-weight: 800; color: #a855f7;" id="profileArchetypeName">Hyper Offense</span>
+            <span class="badge" id="profileConfidence">95% Match</span>
+          </div>
+          <p style="font-size: 13px; color: var(--text-muted);" id="profileDesc">Relentless offensive pressure with hazard setup leads.</p>
+        </div>
+
+        <!-- Metrics Banner -->
+        <div class="metrics-banner" id="metricsBanner" style="display: none;">
+          <div class="metric-box">
+            <div class="metric-value" id="metricSynergy">95</div>
+            <div class="metric-label">Synergy Score</div>
+          </div>
+          <div class="metric-box">
+            <div class="metric-value" id="metricDefense">100</div>
+            <div class="metric-label">Defense Rating</div>
+          </div>
+          <div class="metric-box">
+            <div class="metric-value" id="metricCoverage">16/18</div>
+            <div class="metric-label">SE Coverage</div>
+          </div>
+          <div class="metric-box">
+            <div class="metric-value" id="metricSpeed">108</div>
+            <div class="metric-label">Avg Speed</div>
+          </div>
+        </div>
+
+        <!-- Team Roster -->
+        <div class="card" id="rosterCard" style="display: none;">
+          <h2>Optimized 6-Pokemon Roster</h2>
+          <div class="roster-grid" id="rosterGrid"></div>
+        </div>
+
+        <!-- Cobblemon Wild Catches Recommendation -->
+        <div class="card" id="wildHuntCard" style="display: none; border-color: rgba(16, 185, 129, 0.4);">
+          <h2 style="color: #34d399;">Next Best Minecraft Catches to Hunt</h2>
+          <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 12px;">
+            Target these wild spawns in your Minecraft world to patch your team's remaining defensive gaps:
+          </p>
+          <div id="wildHuntList"></div>
+        </div>
+
+        <!-- Strategic Playbook -->
+        <div class="card" id="playbookCard" style="display: none;">
+          <h2>Strategic Coach Playbook</h2>
+          <div style="margin-bottom: 12px; font-size: 13px;" id="corePhilosophy"></div>
+          
+          <h3 style="font-size: 14px; margin-bottom: 8px; color: #60a5fa;">Recommended Lead Matchups</h3>
+          <div id="leadContainer"></div>
+
+          <h3 style="font-size: 14px; margin-top: 12px; margin-bottom: 8px; color: #8b5cf6;">Terastallization Strategy</h3>
+          <div id="teraContainer"></div>
+        </div>
+
+        <!-- Showdown Paste -->
+        <div class="card" id="pasteCard" style="display: none;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+            <h2>Pokemon Showdown Export</h2>
+            <button class="btn" style="width: auto; padding: 6px 14px; font-size: 12px;" onclick="copyShowdownPaste()">Copy Paste</button>
+          </div>
+          <pre class="showdown-box" id="showdownPasteText"></pre>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let activeProfilerMode = 'quiz';
+
+    function switchProfilerTab(mode) {
+      activeProfilerMode = mode;
+      document.getElementById('tabQuizBtn').classList.toggle('active', mode === 'quiz');
+      document.getElementById('tabReplayBtn').classList.toggle('active', mode === 'replay');
+      document.getElementById('quizSection').style.display = mode === 'quiz' ? 'block' : 'none';
+      document.getElementById('replaySection').style.display = mode === 'replay' ? 'block' : 'none';
+    }
+
+    ['paceRange', 'switchRange', 'aggroRange', 'speedRange'].forEach(id => {
+      document.getElementById(id).addEventListener('input', (e) => {
+        const valId = id.replace('Range', 'Val');
+        document.getElementById(valId).innerText = e.target.value + ' / 5';
+      });
+    });
+
+    async function generateTeam() {
+      const format = document.getElementById('formatSelect').value;
+      const preset = document.getElementById('presetSelect').value;
+      const banned = document.getElementById('bannedInput').value.split(',').map(s => s.trim()).filter(Boolean);
+      const required = document.getElementById('requiredInput').value.split(',').map(s => s.trim()).filter(Boolean);
+      const boxText = document.getElementById('cobblemonBoxInput').value;
+      const boxList = boxText ? boxText.split(/[\n,]/).map(s => s.trim()).filter(Boolean) : [];
+
+      let payload = {
+        format,
+        preset,
+        bannedSpecies: banned,
+        requiredSpecies: required
+      };
+
+      if (boxList.length > 0) {
+        payload.inventory = boxList;
+      }
+
+      if (activeProfilerMode === 'quiz') {
+        payload.quizAnswers = {
+          pace: parseInt(document.getElementById('paceRange').value, 10),
+          switching: parseInt(document.getElementById('switchRange').value, 10),
+          aggression: parseInt(document.getElementById('aggroRange').value, 10),
+          speedStrategy: parseInt(document.getElementById('speedRange').value, 10),
+          teraHabit: 4
+        };
+      } else {
+        const replayLog = document.getElementById('replayLogInput').value;
+        const username = document.getElementById('replayUsername').value;
+        if (replayLog) {
+          const profileRes = await fetch('/api/profile/replay', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ replayLog, username })
+          });
+          payload.profile = await profileRes.json();
+        }
+      }
+
+      const res = await fetch('/api/build', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      const data = await res.json();
+      renderResults(data);
+    }
+
+    function renderResults(data) {
+      const { teamResult, playbook, profile } = data;
+
+      // 1. Profile Card
+      document.getElementById('profileCard').style.display = 'block';
+      document.getElementById('profileArchetypeName').innerText = profile.primaryArchetype.name;
+      document.getElementById('profileConfidence').innerText = `${profile.primaryArchetype.confidence}% Match`;
+      document.getElementById('profileDesc').innerText = profile.primaryArchetype.description;
+
+      // 2. Metrics Banner
+      document.getElementById('metricsBanner').style.display = 'grid';
+      document.getElementById('metricSynergy').innerText = teamResult.synergyReport.compositeScore;
+      document.getElementById('metricDefense').innerText = teamResult.synergyReport.defense.score;
+      document.getElementById('metricCoverage').innerText = `${teamResult.synergyReport.offense.coveredCount}/18`;
+      document.getElementById('metricSpeed').innerText = teamResult.synergyReport.speed.avgSpeed;
+
+      // 3. Roster Grid
+      const rosterGrid = document.getElementById('rosterGrid');
+      rosterGrid.innerHTML = '';
+      teamResult.team.forEach(mon => {
+        const el = document.createElement('div');
+        el.className = 'mon-card';
+        el.innerHTML = `
+          <div class="mon-header">
+            <span class="mon-name">${mon.species}</span>
+            <span class="tera-pill">Tera ${mon.teraType || 'Normal'}</span>
+          </div>
+          <div class="mon-detail" style="color: #cbd5e1;"><strong>Item:</strong> ${mon.item || 'None'}</div>
+          <div class="mon-detail" style="color: #cbd5e1;"><strong>Ability:</strong> ${mon.ability}</div>
+          <div class="mon-detail" style="color: var(--text-muted); font-size: 11px;">
+            ${mon.nature || 'Hardy'} | ${formatEvs(mon.evs)}
+          </div>
+          <div class="mon-moves">
+            ${(mon.moves || []).map(m => `<span class="move-tag">${m}</span>`).join('')}
+          </div>
+        `;
+        rosterGrid.appendChild(el);
+      });
+      document.getElementById('rosterCard').style.display = 'block';
+
+      // Cobblemon Wild Catch Recommendations
+      const wildCard = document.getElementById('wildHuntCard');
+      const wildList = document.getElementById('wildHuntList');
+      if (teamResult.bestCatchesToHunt && teamResult.bestCatchesToHunt.length > 0) {
+        wildList.innerHTML = '';
+        teamResult.bestCatchesToHunt.forEach(c => {
+          const div = document.createElement('div');
+          div.className = 'playbook-step';
+          div.style.borderLeftColor = '#34d399';
+          div.innerHTML = `<strong>Go Catch <span style="color:#34d399;">${c.pokemon}</span></strong> (Replaces ${c.replaces}) &mdash; +${c.gain} Synergy pts. <div style="color:var(--text-muted); font-size:11px;">${c.reason}</div>`;
+          wildList.appendChild(div);
+        });
+        wildCard.style.display = 'block';
+      } else {
+        wildCard.style.display = 'none';
+      }
+
+      // 4. Playbook
+      document.getElementById('playbookCard').style.display = 'block';
+      document.getElementById('corePhilosophy').innerText = playbook.corePhilosophy;
+
+      const leadContainer = document.getElementById('leadContainer');
+      leadContainer.innerHTML = '';
+      playbook.leads.forEach(l => {
+        const div = document.createElement('div');
+        div.className = 'playbook-step';
+        div.innerHTML = `<strong>${l.matchup}:</strong> <span style="color:#60a5fa">${l.lead}</span> &mdash; ${l.instruction}`;
+        leadContainer.appendChild(div);
+      });
+
+      const teraContainer = document.getElementById('teraContainer');
+      teraContainer.innerHTML = '';
+      playbook.terastallizationStrategy.forEach(t => {
+        const div = document.createElement('div');
+        div.className = 'playbook-step';
+        div.style.borderColor = '#8b5cf6';
+        div.innerHTML = `<strong>${t.pokemon} (Tera ${t.recommendedTera}):</strong> [${t.usage}] ${t.note}`;
+        teraContainer.appendChild(div);
+      });
+
+      // 5. Showdown Paste
+      document.getElementById('pasteCard').style.display = 'block';
+      document.getElementById('showdownPasteText').innerText = teamResult.showdownPaste;
+    }
+
+    function formatEvs(evs) {
+      if (!evs) return '';
+      const parts = [];
+      if (evs.hp) parts.push(`${evs.hp} HP`);
+      if (evs.atk) parts.push(`${evs.atk} Atk`);
+      if (evs.def) parts.push(`${evs.def} Def`);
+      if (evs.spa) parts.push(`${evs.spa} SpA`);
+      if (evs.spd) parts.push(`${evs.spd} SpD`);
+      if (evs.spe) parts.push(`${evs.spe} Spe`);
+      return parts.join(' / ');
+    }
+
+    function copyShowdownPaste() {
+      const text = document.getElementById('showdownPasteText').innerText;
+      navigator.clipboard.writeText(text);
+      alert('Showdown Paste copied to clipboard!');
+    }
+  </script>
+</body>
+</html>
