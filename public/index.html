@@ -28,7 +28,7 @@
       color: var(--text);
       font-family: var(--font-main);
       line-height: 1.5;
-      padding: 24px;
+      padding: 20px;
     }
 
     .container {
@@ -40,9 +40,9 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding-bottom: 24px;
+      padding-bottom: 20px;
       border-bottom: 1px solid var(--card-border);
-      margin-bottom: 24px;
+      margin-bottom: 20px;
     }
 
     .brand {
@@ -65,6 +65,30 @@
       padding: 4px 8px;
       border-radius: 9999px;
       border: 1px solid rgba(59, 130, 246, 0.4);
+    }
+
+    .main-nav {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+      border-bottom: 1px solid var(--card-border);
+      padding-bottom: 12px;
+    }
+    .nav-tab-btn {
+      background: #131b2e;
+      color: var(--text-muted);
+      border: 1px solid var(--card-border);
+      padding: 10px 18px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .nav-tab-btn.active {
+      background: var(--accent);
+      color: white;
+      border-color: var(--accent);
     }
 
     .grid {
@@ -143,17 +167,7 @@
       font-size: 15px;
       transition: background 0.2s;
     }
-    .btn:hover {
-      background: var(--accent-hover);
-    }
-    .btn-secondary {
-      background: #1e293b;
-      color: var(--text);
-      margin-top: 8px;
-    }
-    .btn-secondary:hover {
-      background: #334155;
-    }
+    .btn:hover { background: var(--accent-hover); }
 
     /* Team Roster Grid */
     .roster-grid {
@@ -167,7 +181,6 @@
       border: 1px solid var(--card-border);
       border-radius: 10px;
       padding: 14px;
-      position: relative;
     }
     .mon-header {
       display: flex;
@@ -180,14 +193,7 @@
       font-weight: 700;
       color: #60a5fa;
     }
-    .mon-item {
-      font-size: 12px;
-      color: var(--text-muted);
-    }
-    .mon-detail {
-      font-size: 12px;
-      margin-bottom: 4px;
-    }
+    .mon-detail { font-size: 12px; margin-bottom: 4px; }
     .mon-moves {
       margin-top: 8px;
       padding-top: 8px;
@@ -211,7 +217,6 @@
       font-weight: 600;
     }
 
-    /* Synergy Metrics Banner */
     .metrics-banner {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
@@ -260,24 +265,131 @@
       font-size: 13px;
     }
 
-    .tab-nav {
-      display: flex;
-      gap: 8px;
-      margin-bottom: 16px;
+    /* BATTLE ARENA STYLES */
+    .battle-arena {
+      background: linear-gradient(180deg, #0f172a 0%, #050811 100%);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 20px;
+      min-height: 380px;
+      position: relative;
     }
-    .tab-btn {
+    .battle-hud {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 30px;
+    }
+    .hud-box {
+      background: #131b2e;
+      border: 1px solid var(--card-border);
+      padding: 12px 18px;
+      border-radius: 10px;
+      min-width: 260px;
+    }
+    .hud-header {
+      display: flex;
+      justify-content: space-between;
+      font-weight: 700;
+      font-size: 15px;
+      margin-bottom: 6px;
+    }
+    .hp-bar-outer {
+      background: #334155;
+      height: 10px;
+      border-radius: 9999px;
+      overflow: hidden;
+      margin-bottom: 4px;
+    }
+    .hp-bar-inner {
+      background: var(--success);
+      height: 100%;
+      width: 100%;
+      transition: width 0.4s ease;
+    }
+    .hp-text {
+      font-size: 11px;
+      color: var(--text-muted);
+      text-align: right;
+      font-family: var(--font-mono);
+    }
+    .battle-controls {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 16px;
+    }
+    .move-buttons-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+    .btn-move {
+      background: #1e293b;
+      color: white;
+      border: 1px solid #334155;
+      padding: 14px;
+      border-radius: 8px;
+      cursor: pointer;
+      text-align: left;
+      font-weight: 600;
+      transition: all 0.2s;
+    }
+    .btn-move:hover:not(:disabled) {
+      background: var(--accent);
+      border-color: var(--accent);
+    }
+    .btn-move:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+    .move-type-pill {
+      display: inline-block;
+      font-size: 10px;
+      padding: 2px 6px;
+      border-radius: 4px;
+      background: rgba(255,255,255,0.15);
+      margin-left: 6px;
+    }
+    .switch-bench-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .btn-switch {
       background: #0f172a;
       border: 1px solid var(--card-border);
-      color: var(--text-muted);
-      padding: 6px 12px;
+      color: var(--text);
+      padding: 8px 12px;
       border-radius: 6px;
-      font-size: 13px;
+      font-size: 12px;
       cursor: pointer;
+      text-align: left;
+      display: flex;
+      justify-content: space-between;
     }
-    .tab-btn.active {
-      background: var(--accent);
-      color: white;
+    .btn-switch:hover:not(:disabled) {
       border-color: var(--accent);
+    }
+    .battle-log-terminal {
+      background: #050811;
+      border: 1px solid var(--card-border);
+      padding: 12px;
+      border-radius: 8px;
+      height: 140px;
+      overflow-y: auto;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      margin-top: 14px;
+    }
+    .review-timeline-item {
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+      padding: 8px 12px;
+      border-radius: 6px;
+      background: #0f172a;
+      margin-bottom: 6px;
+      font-size: 13px;
     }
   </style>
 </head>
@@ -289,63 +401,60 @@
         <span class="badge">Singles & Doubles Intelligence</span>
       </div>
       <div style="font-size: 13px; color: var(--text-muted);">
-        Hybrid Optimization &middot; Custom Regulations &middot; Playstyle AI
+        Showdown Battle Arena &middot; Post-Match AI Review &middot; Cobblemon Optimizer
       </div>
     </header>
 
-    <div class="grid">
-      <!-- Left Column: Controls & Profiler -->
-      <div>
-        <!-- Regulation Configuration Card -->
-        <div class="card">
-          <h2>1. Custom Regulation</h2>
-          <div class="form-group">
-            <label>Format</label>
-            <select id="formatSelect">
-              <option value="singles">Singles Battle</option>
-              <option value="doubles">Doubles / VGC</option>
-            </select>
-          </div>
+    <div class="main-nav">
+      <button class="nav-tab-btn active" id="navTeamBtn" onclick="switchMainTab('team')">1. Team Builder & Cobblemon Box</button>
+      <button class="nav-tab-btn" id="navArenaBtn" onclick="switchMainTab('arena')">2. Practice Battle Arena (vs Bot)</button>
+    </div>
 
-          <div class="form-group">
-            <label>Regulation Preset</label>
-            <select id="presetSelect">
-              <option value="gen9ou">Gen 9 Singles OU (Smogon)</option>
-              <option value="vgc_regh">VGC Regulation H (No Legendaries/Paradox)</option>
-              <option value="vgc_regg">VGC Regulation G (1 Restricted)</option>
-              <option value="gen9ubers">Gen 9 Ubers</option>
-              <option value="doubles_ou">Gen 9 Doubles OU</option>
-            </select>
-          </div>
+    <!-- TAB 1: TEAM BUILDER & COBBLEMON OPTIMIZER -->
+    <div id="tabTeamSection">
+      <div class="grid">
+        <!-- Left: Custom Regulation & Profiler -->
+        <div>
+          <div class="card">
+            <h2>1. Custom Regulation</h2>
+            <div class="form-group">
+              <label>Format</label>
+              <select id="formatSelect">
+                <option value="singles">Singles Battle</option>
+                <option value="doubles">Doubles / VGC</option>
+              </select>
+            </div>
 
-          <div class="form-group">
-            <label>Custom Banlist (Comma separated)</label>
-            <input type="text" id="bannedInput" placeholder="e.g. Garchomp, Ting-Lu, Urshifu">
-          </div>
+            <div class="form-group">
+              <label>Regulation Preset</label>
+              <select id="presetSelect">
+                <option value="gen9ou">Gen 9 Singles OU (Smogon)</option>
+                <option value="vgc_regh">VGC Regulation H (No Legendaries/Paradox)</option>
+                <option value="vgc_regg">VGC Regulation G (1 Restricted)</option>
+                <option value="gen9ubers">Gen 9 Ubers</option>
+                <option value="doubles_ou">Gen 9 Doubles OU</option>
+              </select>
+            </div>
 
-          <div class="form-group">
-            <label>Required Core Pokemon (Optional)</label>
-            <input type="text" id="requiredInput" placeholder="e.g. Dragapult, Incineroar">
-          </div>
+            <div class="form-group">
+              <label>Custom Banlist (Comma separated)</label>
+              <input type="text" id="bannedInput" placeholder="e.g. Garchomp, Ting-Lu, Urshifu">
+            </div>
 
-          <div class="form-group" style="margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--card-border);">
-            <label style="color: #60a5fa;">Cobblemon PC Box (Caught Pokemon in Minecraft)</label>
-            <textarea id="cobblemonBoxInput" rows="3" placeholder="Paste your caught Pokemon (comma separated)&#10;e.g. Meowscarada, Garchomp, Corviknight, Gyarados, Tinkaton, Skeledirge, Magnezone"></textarea>
-            <div style="margin-top: 6px; font-size: 11px; color: var(--text-muted);">
-              Leave empty to generate from all legal Pokémon, or paste your PC box to optimize what you already own!
+            <div class="form-group">
+              <label>Required Core Pokemon (Optional)</label>
+              <input type="text" id="requiredInput" placeholder="e.g. Dragapult, Incineroar">
+            </div>
+
+            <div class="form-group" style="margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--card-border);">
+              <label style="color: #60a5fa;">Cobblemon PC Box (Caught Pokemon in Minecraft)</label>
+              <textarea id="cobblemonBoxInput" rows="3" placeholder="Paste your caught Pokemon (comma separated)&#10;e.g. Ninetales-Alola, Samurott-Hisui, Corviknight, Garchomp, Sneasler, Typhlosion-Hisui, Jolteon, Darmanitan-Galar"></textarea>
             </div>
           </div>
-        </div>
 
-        <!-- Playstyle Profiler Card -->
-        <div class="card">
-          <h2>2. Personal Playstyle Profiler</h2>
-          <div class="tab-nav">
-            <button class="tab-btn active" id="tabQuizBtn" onclick="switchProfilerTab('quiz')">Interactive Quiz</button>
-            <button class="tab-btn" id="tabReplayBtn" onclick="switchProfilerTab('replay')">Showdown Replay</button>
-          </div>
-
-          <div id="quizSection">
+          <!-- Playstyle Profiler Card -->
+          <div class="card">
+            <h2>2. Playstyle Calibration</h2>
             <div class="form-group">
               <label>Battle Tempo (Slow Stall vs Fast Sweepers)</label>
               <div class="range-slider">
@@ -370,113 +479,194 @@
               </div>
             </div>
 
-            <div class="form-group">
-              <label>Speed Archetype (1 = Trick Room, 5 = Tailwind/HO)</label>
-              <div class="range-slider">
-                <input type="range" id="speedRange" min="1" max="5" value="4">
-                <span id="speedVal">4 / 5</span>
-              </div>
+            <button class="btn" onclick="generateTeam()">Generate Optimized Team</button>
+          </div>
+        </div>
+
+        <!-- Right: Output & Showdown Export -->
+        <div>
+          <!-- Profile Card -->
+          <div class="card" id="profileCard" style="display: none;">
+            <h2>Playstyle Match Identified</h2>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+              <span style="font-size: 20px; font-weight: 800; color: #a855f7;" id="profileArchetypeName">Hyper Offense</span>
+              <span class="badge" id="profileConfidence">95% Match</span>
+            </div>
+            <p style="font-size: 13px; color: var(--text-muted);" id="profileDesc"></p>
+          </div>
+
+          <!-- Metrics Banner -->
+          <div class="metrics-banner" id="metricsBanner" style="display: none;">
+            <div class="metric-box">
+              <div class="metric-value" id="metricSynergy">95</div>
+              <div class="metric-label">Synergy Score</div>
+            </div>
+            <div class="metric-box">
+              <div class="metric-value" id="metricDefense">100</div>
+              <div class="metric-label">Defense Rating</div>
+            </div>
+            <div class="metric-box">
+              <div class="metric-value" id="metricCoverage">16/18</div>
+              <div class="metric-label">SE Coverage</div>
+            </div>
+            <div class="metric-box">
+              <div class="metric-value" id="metricSpeed">108</div>
+              <div class="metric-label">Avg Speed</div>
             </div>
           </div>
 
-          <div id="replaySection" style="display: none;">
-            <div class="form-group">
-              <label>Paste Raw Showdown Battle Log</label>
-              <textarea id="replayLogInput" rows="6" placeholder="|player|p1|...\n|turn|1\n|move|..."></textarea>
+          <!-- Team Roster -->
+          <div class="card" id="rosterCard" style="display: none;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+              <h2>Optimized 6-Pokemon Roster</h2>
+              <button class="btn" style="width: auto; padding: 6px 14px; font-size: 12px;" onclick="loadTeamIntoArena()">Practice Battle with this Team</button>
             </div>
-            <div class="form-group">
-              <label>Your In-Game Username</label>
-              <input type="text" id="replayUsername" placeholder="e.g. RedMaster">
-            </div>
+            <div class="roster-grid" id="rosterGrid"></div>
           </div>
 
-          <button class="btn" onclick="generateTeam()">Generate Optimized Team</button>
+          <!-- Cobblemon Wild Catches Recommendation -->
+          <div class="card" id="wildHuntCard" style="display: none; border-color: rgba(16, 185, 129, 0.4);">
+            <h2 style="color: #34d399;">Next Best Minecraft Catches to Hunt</h2>
+            <div id="wildHuntList"></div>
+          </div>
+
+          <!-- Strategic Playbook -->
+          <div class="card" id="playbookCard" style="display: none;">
+            <h2>Strategic Coach Playbook</h2>
+            <div style="margin-bottom: 12px; font-size: 13px;" id="corePhilosophy"></div>
+            <h3 style="font-size: 14px; margin-bottom: 8px; color: #60a5fa;">Recommended Lead Matchups</h3>
+            <div id="leadContainer"></div>
+          </div>
+
+          <!-- Showdown Paste -->
+          <div class="card" id="pasteCard" style="display: none;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+              <h2>Pokemon Showdown Export</h2>
+              <button class="btn" style="width: auto; padding: 6px 14px; font-size: 12px;" onclick="copyShowdownPaste()">Copy Paste</button>
+            </div>
+            <pre class="showdown-box" id="showdownPasteText"></pre>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 2: PRACTICE BATTLE ARENA (VS SHOWDOWN BOT) -->
+    <div id="tabArenaSection" style="display: none;">
+      <div class="card" style="margin-bottom: 16px;">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <h2>Showdown Practice Battle Arena</h2>
+          <div style="display: flex; gap: 10px;">
+            <select id="botPresetSelect" style="width: 200px;">
+              <option value="ou_balanced">AI Bot: OU Balanced Meta</option>
+              <option value="rain_offense">AI Bot: Rain Offense</option>
+            </select>
+            <button class="btn" style="width: auto;" onclick="startNewBattle()">Start New Battle</button>
+          </div>
         </div>
       </div>
 
-      <!-- Right Column: Results & Playbook -->
-      <div>
-        <!-- Profile Banner -->
-        <div class="card" id="profileCard" style="display: none;">
-          <h2>Playstyle Match Identified</h2>
-          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-            <span style="font-size: 20px; font-weight: 800; color: #a855f7;" id="profileArchetypeName">Hyper Offense</span>
-            <span class="badge" id="profileConfidence">95% Match</span>
+      <!-- Live Battle Arena View -->
+      <div class="battle-arena" id="battleArenaView">
+        <div class="battle-hud">
+          <!-- Opponent HUD (Top Left) -->
+          <div class="hud-box" id="botHud">
+            <div class="hud-header">
+              <span id="botMonName">Opponent Pokemon</span>
+              <span style="font-size: 12px; color: #94a3b8;">AI Bot</span>
+            </div>
+            <div class="hp-bar-outer">
+              <div class="hp-bar-inner" id="botHpBar" style="width: 100%;"></div>
+            </div>
+            <div class="hp-text" id="botHpText">100%</div>
           </div>
-          <p style="font-size: 13px; color: var(--text-muted);" id="profileDesc">Relentless offensive pressure with hazard setup leads.</p>
+
+          <!-- Player HUD (Bottom Right) -->
+          <div class="hud-box" id="playerHud">
+            <div class="hud-header">
+              <span id="playerMonName" style="color: #60a5fa;">Your Pokemon</span>
+              <span style="font-size: 12px; color: #10b981;">Active</span>
+            </div>
+            <div class="hp-bar-outer">
+              <div class="hp-bar-inner" id="playerHpBar" style="width: 100%;"></div>
+            </div>
+            <div class="hp-text" id="playerHpText">100% (HP)</div>
+          </div>
         </div>
 
-        <!-- Metrics Banner -->
-        <div class="metrics-banner" id="metricsBanner" style="display: none;">
+        <!-- Controls -->
+        <div class="battle-controls">
+          <!-- 4 Moves Buttons -->
+          <div>
+            <div style="font-size: 12px; color: var(--text-muted); margin-bottom: 6px; font-weight: 600;">Choose Move:</div>
+            <div class="move-buttons-grid" id="moveButtonsContainer"></div>
+          </div>
+
+          <!-- Switch Bench Options -->
+          <div>
+            <div style="font-size: 12px; color: var(--text-muted); margin-bottom: 6px; font-weight: 600;">Switch Pokemon:</div>
+            <div class="switch-bench-grid" id="switchBenchContainer"></div>
+          </div>
+        </div>
+
+        <!-- Real-Time Battle Log -->
+        <div class="battle-log-terminal" id="battleLogTerminal">
+          Waiting for battle to start...
+        </div>
+      </div>
+
+      <!-- POST-MATCH CHESS.COM GAME REVIEW -->
+      <div class="card" id="gameReviewCard" style="display: none; border-color: #8b5cf6;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
+          <h2 style="color: #a855f7;">AI Post-Match Game Review (Chess.com Style)</h2>
+          <span class="badge" id="reviewGradeBadge" style="font-size: 16px; padding: 6px 14px;">Grade: S</span>
+        </div>
+
+        <div class="metrics-banner">
           <div class="metric-box">
-            <div class="metric-value" id="metricSynergy">95</div>
-            <div class="metric-label">Synergy Score</div>
+            <div class="metric-value" id="reviewAccuracy">92%</div>
+            <div class="metric-label">Accuracy Score</div>
           </div>
           <div class="metric-box">
-            <div class="metric-value" id="metricDefense">100</div>
-            <div class="metric-label">Defense Rating</div>
+            <div class="metric-value" style="color:#60a5fa;" id="reviewBest">8</div>
+            <div class="metric-label">Best Moves</div>
           </div>
           <div class="metric-box">
-            <div class="metric-value" id="metricCoverage">16/18</div>
-            <div class="metric-label">SE Coverage</div>
+            <div class="metric-value" style="color:#f59e0b;" id="reviewInacc">1</div>
+            <div class="metric-label">Inaccuracies</div>
           </div>
           <div class="metric-box">
-            <div class="metric-value" id="metricSpeed">108</div>
-            <div class="metric-label">Avg Speed</div>
+            <div class="metric-value" style="color:#ef4444;" id="reviewBlunders">0</div>
+            <div class="metric-label">Blunders</div>
           </div>
         </div>
 
-        <!-- Team Roster -->
-        <div class="card" id="rosterCard" style="display: none;">
-          <h2>Optimized 6-Pokemon Roster</h2>
-          <div class="roster-grid" id="rosterGrid"></div>
+        <div style="background: #0f172a; padding: 12px; border-radius: 8px; margin-bottom: 14px;">
+          <strong>Turning Point:</strong> <span id="reviewTurningPoint" style="color: #60a5fa;">Turn 3</span>
         </div>
 
-        <!-- Cobblemon Wild Catches Recommendation -->
-        <div class="card" id="wildHuntCard" style="display: none; border-color: rgba(16, 185, 129, 0.4);">
-          <h2 style="color: #34d399;">Next Best Minecraft Catches to Hunt</h2>
-          <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 12px;">
-            Target these wild spawns in your Minecraft world to patch your team's remaining defensive gaps:
-          </p>
-          <div id="wildHuntList"></div>
-        </div>
+        <h3 style="font-size: 14px; margin-bottom: 8px; color: #34d399;">Key Tournament Lessons</h3>
+        <div id="reviewLessons" style="margin-bottom: 16px;"></div>
 
-        <!-- Strategic Playbook -->
-        <div class="card" id="playbookCard" style="display: none;">
-          <h2>Strategic Coach Playbook</h2>
-          <div style="margin-bottom: 12px; font-size: 13px;" id="corePhilosophy"></div>
-          
-          <h3 style="font-size: 14px; margin-bottom: 8px; color: #60a5fa;">Recommended Lead Matchups</h3>
-          <div id="leadContainer"></div>
-
-          <h3 style="font-size: 14px; margin-top: 12px; margin-bottom: 8px; color: #8b5cf6;">Terastallization Strategy</h3>
-          <div id="teraContainer"></div>
-        </div>
-
-        <!-- Showdown Paste -->
-        <div class="card" id="pasteCard" style="display: none;">
-          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-            <h2>Pokemon Showdown Export</h2>
-            <button class="btn" style="width: auto; padding: 6px 14px; font-size: 12px;" onclick="copyShowdownPaste()">Copy Paste</button>
-          </div>
-          <pre class="showdown-box" id="showdownPasteText"></pre>
-        </div>
+        <h3 style="font-size: 14px; margin-bottom: 8px; color: #94a3b8;">Turn-by-Turn Annotation Timeline</h3>
+        <div id="reviewTimeline"></div>
       </div>
     </div>
   </div>
 
   <script>
-    let activeProfilerMode = 'quiz';
+    let activeMainTab = 'team';
+    let currentTeamData = null;
+    let currentBattleId = null;
 
-    function switchProfilerTab(mode) {
-      activeProfilerMode = mode;
-      document.getElementById('tabQuizBtn').classList.toggle('active', mode === 'quiz');
-      document.getElementById('tabReplayBtn').classList.toggle('active', mode === 'replay');
-      document.getElementById('quizSection').style.display = mode === 'quiz' ? 'block' : 'none';
-      document.getElementById('replaySection').style.display = mode === 'replay' ? 'block' : 'none';
+    function switchMainTab(tab) {
+      activeMainTab = tab;
+      document.getElementById('navTeamBtn').classList.toggle('active', tab === 'team');
+      document.getElementById('navArenaBtn').classList.toggle('active', tab === 'arena');
+      document.getElementById('tabTeamSection').style.display = tab === 'team' ? 'block' : 'none';
+      document.getElementById('tabArenaSection').style.display = tab === 'arena' ? 'block' : 'none';
     }
 
-    ['paceRange', 'switchRange', 'aggroRange', 'speedRange'].forEach(id => {
+    ['paceRange', 'switchRange', 'aggroRange'].forEach(id => {
       document.getElementById(id).addEventListener('input', (e) => {
         const valId = id.replace('Range', 'Val');
         document.getElementById(valId).innerText = e.target.value + ' / 5';
@@ -495,33 +685,17 @@
         format,
         preset,
         bannedSpecies: banned,
-        requiredSpecies: required
-      };
-
-      if (boxList.length > 0) {
-        payload.inventory = boxList;
-      }
-
-      if (activeProfilerMode === 'quiz') {
-        payload.quizAnswers = {
+        requiredSpecies: required,
+        quizAnswers: {
           pace: parseInt(document.getElementById('paceRange').value, 10),
           switching: parseInt(document.getElementById('switchRange').value, 10),
           aggression: parseInt(document.getElementById('aggroRange').value, 10),
-          speedStrategy: parseInt(document.getElementById('speedRange').value, 10),
+          speedStrategy: 4,
           teraHabit: 4
-        };
-      } else {
-        const replayLog = document.getElementById('replayLogInput').value;
-        const username = document.getElementById('replayUsername').value;
-        if (replayLog) {
-          const profileRes = await fetch('/api/profile/replay', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ replayLog, username })
-          });
-          payload.profile = await profileRes.json();
         }
-      }
+      };
+
+      if (boxList.length > 0) payload.inventory = boxList;
 
       const res = await fetch('/api/build', {
         method: 'POST',
@@ -529,26 +703,24 @@
         body: JSON.stringify(payload)
       });
       const data = await res.json();
+      currentTeamData = data;
       renderResults(data);
     }
 
     function renderResults(data) {
       const { teamResult, playbook, profile } = data;
 
-      // 1. Profile Card
       document.getElementById('profileCard').style.display = 'block';
       document.getElementById('profileArchetypeName').innerText = profile.primaryArchetype.name;
       document.getElementById('profileConfidence').innerText = `${profile.primaryArchetype.confidence}% Match`;
       document.getElementById('profileDesc').innerText = profile.primaryArchetype.description;
 
-      // 2. Metrics Banner
       document.getElementById('metricsBanner').style.display = 'grid';
       document.getElementById('metricSynergy').innerText = teamResult.synergyReport.compositeScore;
       document.getElementById('metricDefense').innerText = teamResult.synergyReport.defense.score;
       document.getElementById('metricCoverage').innerText = `${teamResult.synergyReport.offense.coveredCount}/18`;
       document.getElementById('metricSpeed').innerText = teamResult.synergyReport.speed.avgSpeed;
 
-      // 3. Roster Grid
       const rosterGrid = document.getElementById('rosterGrid');
       rosterGrid.innerHTML = '';
       teamResult.team.forEach(mon => {
@@ -572,7 +744,7 @@
       });
       document.getElementById('rosterCard').style.display = 'block';
 
-      // Cobblemon Wild Catch Recommendations
+      // Wild Catches Hunt
       const wildCard = document.getElementById('wildHuntCard');
       const wildList = document.getElementById('wildHuntList');
       if (teamResult.bestCatchesToHunt && teamResult.bestCatchesToHunt.length > 0) {
@@ -589,7 +761,6 @@
         wildCard.style.display = 'none';
       }
 
-      // 4. Playbook
       document.getElementById('playbookCard').style.display = 'block';
       document.getElementById('corePhilosophy').innerText = playbook.corePhilosophy;
 
@@ -602,17 +773,6 @@
         leadContainer.appendChild(div);
       });
 
-      const teraContainer = document.getElementById('teraContainer');
-      teraContainer.innerHTML = '';
-      playbook.terastallizationStrategy.forEach(t => {
-        const div = document.createElement('div');
-        div.className = 'playbook-step';
-        div.style.borderColor = '#8b5cf6';
-        div.innerHTML = `<strong>${t.pokemon} (Tera ${t.recommendedTera}):</strong> [${t.usage}] ${t.note}`;
-        teraContainer.appendChild(div);
-      });
-
-      // 5. Showdown Paste
       document.getElementById('pasteCard').style.display = 'block';
       document.getElementById('showdownPasteText').innerText = teamResult.showdownPaste;
     }
@@ -633,6 +793,124 @@
       const text = document.getElementById('showdownPasteText').innerText;
       navigator.clipboard.writeText(text);
       alert('Showdown Paste copied to clipboard!');
+    }
+
+    function loadTeamIntoArena() {
+      switchMainTab('arena');
+      startNewBattle();
+    }
+
+    /* PRACTICE BATTLE ENGINE CLIENT */
+    async function startNewBattle() {
+      const botPreset = document.getElementById('botPresetSelect').value;
+      const userTeam = currentTeamData?.teamResult?.team || undefined;
+
+      document.getElementById('gameReviewCard').style.display = 'none';
+
+      const res = await fetch('/api/battle/start', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ userTeam, botPreset })
+      });
+      const state = await res.json();
+      currentBattleId = state.battleId;
+      updateBattleUI(state);
+    }
+
+    async function sendTurn(type, index) {
+      if (!currentBattleId) return;
+      const res = await fetch('/api/battle/turn', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          battleId: currentBattleId,
+          action: { type, index }
+        })
+      });
+      const result = await res.json();
+      updateBattleUI(result.state);
+
+      if (result.ended) {
+        loadGameReview();
+      }
+    }
+
+    function updateBattleUI(state) {
+      if (!state) return;
+
+      // Update Opponent HUD
+      if (state.bot.active) {
+        document.getElementById('botMonName').innerText = state.bot.active.species;
+        document.getElementById('botHpBar').style.width = state.bot.active.hpPercent + '%';
+        document.getElementById('botHpText').innerText = state.bot.active.hpPercent + '%';
+      }
+
+      // Update Player HUD
+      if (state.player.active) {
+        document.getElementById('playerMonName').innerText = state.player.active.species;
+        document.getElementById('playerHpBar').style.width = state.player.active.hpPercent + '%';
+        document.getElementById('playerHpText').innerText = `${state.player.active.hpPercent}% (${state.player.active.hp}/${state.player.active.maxhp} HP)`;
+      }
+
+      // Render Move Buttons
+      const moveContainer = document.getElementById('moveButtonsContainer');
+      moveContainer.innerHTML = '';
+      if (state.player.active && state.player.active.moves) {
+        state.player.active.moves.forEach(m => {
+          const btn = document.createElement('button');
+          btn.className = 'btn-move';
+          btn.disabled = m.disabled || state.ended;
+          btn.innerHTML = `<div>${m.name}<span class="move-type-pill">${m.type}</span></div><div style="font-size:11px;color:var(--text-muted);">${m.pp}/${m.maxpp} PP</div>`;
+          btn.onclick = () => sendTurn('move', m.index);
+          moveContainer.appendChild(btn);
+        });
+      }
+
+      // Render Switch Bench
+      const switchContainer = document.getElementById('switchBenchContainer');
+      switchContainer.innerHTML = '';
+      state.player.team.forEach(p => {
+        if (!p.isActive) {
+          const btn = document.createElement('button');
+          btn.className = 'btn-switch';
+          btn.disabled = p.fainted || state.ended;
+          btn.innerHTML = `<span>${p.species}</span> <span style="color:${p.fainted ? '#ef4444' : '#10b981'};">${p.fainted ? 'FNT' : p.hpPercent + '%'}</span>`;
+          btn.onclick = () => sendTurn('switch', p.slot);
+          switchContainer.appendChild(btn);
+        }
+      });
+
+      // Update Terminal
+      const terminal = document.getElementById('battleLogTerminal');
+      terminal.innerHTML = state.recentLogs.map(l => `<div>${l}</div>`).join('');
+      terminal.scrollTop = terminal.scrollHeight;
+    }
+
+    async function loadGameReview() {
+      if (!currentBattleId) return;
+      const res = await fetch('/api/battle/review', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ battleId: currentBattleId })
+      });
+      const review = await res.json();
+
+      document.getElementById('gameReviewCard').style.display = 'block';
+      document.getElementById('reviewGradeBadge').innerText = `Grade: ${review.grade}`;
+      document.getElementById('reviewAccuracy').innerText = `${review.accuracyScore}%`;
+      document.getElementById('reviewBest').innerText = review.stats.best + review.stats.brilliant;
+      document.getElementById('reviewInacc').innerText = review.stats.inaccuracies;
+      document.getElementById('reviewBlunders').innerText = review.stats.blunders;
+      document.getElementById('reviewTurningPoint').innerText = review.turningPoint.description;
+
+      const lessonsDiv = document.getElementById('reviewLessons');
+      lessonsDiv.innerHTML = review.lessons.map(l => `<div class="playbook-step" style="border-left-color:#34d399;">${l}</div>`).join('');
+
+      const timelineDiv = document.getElementById('reviewTimeline');
+      timelineDiv.innerHTML = review.timeline.map(t => {
+        const icon = t.type === 'BRILLIANT' ? '🌟' : (t.type === 'BEST' ? '🟢' : (t.type === 'BLUNDER' ? '🔴' : (t.type === 'MISTAKE' ? '🟠' : '⚪')));
+        return `<div class="review-timeline-item"><span>${icon}</span> <strong>Turn ${t.turn} [${t.type}]:</strong> <span style="color:var(--text-muted);">${t.feedback}</span></div>`;
+      }).join('');
     }
   </script>
 </body>

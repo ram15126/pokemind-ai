@@ -6,11 +6,14 @@ import { RegulationEngine, REGULATION_PRESETS } from './engine/regulation.js';
 import { PlayerProfiler } from './engine/profiler.js';
 import { TeamBuilder } from './engine/builder.js';
 import { StrategyCoach } from './engine/coach.js';
+import { BattleSimulator, PRACTICE_BOT_TEAMS } from './engine/simulator.js';
+import { GameReviewer } from './engine/reviewer.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const PORT = process.env.PORT || 3000;
+const activeBattles = new Map();
 
 function parseJsonBody(req) {
   return new Promise((resolve, reject) => {
@@ -117,6 +120,67 @@ const server = http.createServer(async (req, res) => {
     } catch (err) {
       res.writeHead(500, { 'Content-Type': 'application/json' });
       res.end(JSON.stringify({ error: err.message, stack: err.stack }));
+    }
+    return;
+  }
+
+  // Battle Simulator Endpoints
+  if (url.pathname === '/api/battle/start' && req.method === 'POST') {
+    try {
+      const body = await parseJsonBody(req);
+      const sim = new BattleSimulator({
+        userTeam: body.userTeam,
+        botPreset: body.botPreset || 'ou_balanced'
+      });
+      activeBattles.set(sim.id, sim);
+      res.writeHead(200, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify(sim.getState()));
+    } catch (err) {
+      res.writeHead(500, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ error: err.message }));
+    }
+    return;
+  }
+
+  if (url.pathname === '/api/battle/turn' && req.method === 'POST') {
+    try {
+      const body = await parseJsonBody(req);
+      const sim = activeBattles.get(body.battleId);
+      if (!sim) {
+        res.writeHead(404, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({ error: 'Battle not found' }));
+        return;
+      }
+      const turnRes = sim.submitTurn(body.action);
+      res.writeHead(200, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify(turnRes));
+    } catch (err) {
+      res.writeHead(500, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ error: err.message }));
+    }
+    return;
+  }
+
+  if (url.pathname === '/api/battle/review' && req.method === 'POST') {
+    try {
+      const body = await parseJsonBody(req);
+      const sim = activeBattles.get(body.battleId);
+      if (!sim) {
+        res.writeHead(404, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({ error: 'Battle not found' }));
+        return;
+      }
+      const reviewer = new GameReviewer();
+      const review = reviewer.reviewMatch({
+        turnHistory: sim.turnHistory,
+        fullLogText: sim.rawLogs.join('\n'),
+        winner: sim.battle.winner || 'Player'
+      });
+      res.writeHead(200, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify(review));
+    } catch (err) {
+      res.writeHead(500, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ error: err.message }));
     }
     return;
   }

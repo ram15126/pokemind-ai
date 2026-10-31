@@ -30,6 +30,27 @@ A multi-tiered competitive AI intelligence system for **Singles and Doubles** Po
    * Specific lead pairings against Hyper Offense, Balance, and Trick Room.
    * Offensive and Defensive Terastallization priorities.
 
+6. **Interactive Showdown Practice Arena & Bot (`engine/simulator.js`)**
+   * Powered directly by `@pkmn/sim` (official Pokémon Showdown battle engine).
+   * Practice real turn-based battles directly in your browser against intelligent AI Bots.
+   * Interactive HUD with animated HP bars, Move selection buttons, and Switch bench options.
+
+7. **Chess.com Style Post-Match Game Review (`engine/reviewer.js`)**
+   * Analyzes your completed practice matches turn-by-turn.
+   * Computes your **Player Accuracy Rating** (0–100%) and Letter Grade (S, A, B, C, D).
+   * Highlights 🌟 Brilliant Moves, 🟢 Best Moves, 🟡 Inaccuracies, 🟠 Mistakes, and 🔴 Blunders.
+   * Identifies the key turning point and generates 3 tailored coaching lessons for Cobblemon tournaments.
+
+---
+
+## Deployment on Vercel
+
+This repository is ready for **Vercel** serverless deployment out of the box:
+1. Log into your [Vercel Dashboard](https://vercel.com).
+2. Click **"Add New Project"** $\rightarrow$ **"Import Git Repository"**.
+3. Select `ram15126/pokemind-ai`.
+4. Click **"Deploy"** (Vercel automatically detects `vercel.json` and hosts the frontend with serverless API functions!).
+
 ---
 
 ## Quick Start
